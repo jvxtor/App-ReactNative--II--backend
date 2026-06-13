@@ -21,11 +21,11 @@ const getOne = async (req, res, next) => {
 
 const create = async (req, res, next) => {
   try {
-    const { name, description } = req.body;
+    const { name, description, imageUrl } = req.body;
     if (!name || !description) {
       return res.status(400).json({ error: 'Name and description are required' });
     }
-    const pokemon = await Pokemon.create({ name, description });
+    const pokemon = await Pokemon.create({ name, description, imageUrl });
     res.status(201).json(pokemon);
   } catch (err) {
     next(err);
@@ -34,10 +34,10 @@ const create = async (req, res, next) => {
 
 const update = async (req, res, next) => {
   try {
-    const { name, description } = req.body;
+    const { name, description, imageUrl } = req.body;
     const exists = await Pokemon.findById(req.params.id);
     if (!exists) return res.status(404).json({ error: 'Pokemon not found' });
-    const pokemon = await Pokemon.update(req.params.id, { name, description });
+    const pokemon = await Pokemon.update(req.params.id, { name, description, imageUrl });
     res.json(pokemon);
   } catch (err) {
     next(err);

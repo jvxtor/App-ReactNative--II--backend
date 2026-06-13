@@ -13,19 +13,20 @@ const findById = async (id) => {
   return { id: doc.id, ...doc.data() };
 };
 
-const create = async ({ name, description }) => {
+const create = async ({ name, description, imageUrl }) => {
   const ref = await db.collection(COLLECTION).add({
     name,
     description,
+    imageUrl: imageUrl || null,
     createdAt: new Date().toISOString(),
   });
   const doc = await ref.get();
   return { id: doc.id, ...doc.data() };
 };
 
-const update = async (id, { name, description }) => {
+const update = async (id, { name, description, imageUrl }) => {
   const ref = db.collection(COLLECTION).doc(id);
-  await ref.update({ name, description, updatedAt: new Date().toISOString() });
+  await ref.update({ name, description, imageUrl: imageUrl || null, updatedAt: new Date().toISOString() });
   const doc = await ref.get();
   return { id: doc.id, ...doc.data() };
 };
